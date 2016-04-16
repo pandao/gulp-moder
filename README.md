@@ -117,6 +117,7 @@ define(function(require, exports, module){
 
 ```javascript
 //@modulePackage xxxx     // 包名
+
 //@moduleName xxxx        // 模块名
 //@moduleDeps xxx,xxx,... // 模块依赖
 
