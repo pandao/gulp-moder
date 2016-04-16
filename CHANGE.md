@@ -13,3 +13,8 @@
 
 - 更新 `index.js` `rename()` 方法；
 - 更新 README.md，`moder.js` 链接地址错误的问题；
+
+### v0.1.2
+
+- 整理代码 @`index.js`；
+- 更新 README.md；

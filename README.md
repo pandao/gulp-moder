@@ -6,7 +6,13 @@ Gulp plugin for [Moder.js](https://github.com/pandao/moder.js)
 
 ### 使用方法
 
-`Gulpfile.js`：
+安装命令：
+
+```shell
+$ npm install gulp-moder --save-dev
+```
+
+Gulp 任务配置 `Gulpfile.js`：
 
 ```javascript
 /**

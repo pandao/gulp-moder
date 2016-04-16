@@ -1,7 +1,7 @@
 /**
  * Gulp plugin for Moder.js
  * 
- * @version    v0.1.0
+ * @version    v0.1.2
  * @author     Pandao <pandao@vip.qq.com>
  * @homePage   https://github.com/pandao/gulp-moder
  * @updateTime 2016-04-16
@@ -33,6 +33,7 @@ module.exports = {
     srcPath       : '.',
     destPath      : '.', 
     appendMap     : {},
+    rename        : rename,
     resMap        : function() {
         var _this  = this,
             remap  = false,
@@ -45,7 +46,8 @@ module.exports = {
             var url = pathFillEnd(_this.destPath) + item.file;
 
             if (item.pkg !== '') {
-                var deps = {}, depsArr = [];
+                var deps    = {}, 
+                    depsArr = [];
                 
                 item.names.forEach(function(name){
                     deps[name] = name;
@@ -64,20 +66,20 @@ module.exports = {
                 resMap.pkg[item.pkg] = {
                     deps : depsArr,
                     url  : url
-                }
+                };
                 
                 item.names.forEach(function(name, i){
                     resMap.res[name] = {
                         deps : item.deps[i] || [],
                         pkg  : item.pkg
-                    }
+                    };
                 });
             } else {
                 item.names.forEach(function(name, i){
                     resMap.res[name] = {
                         deps : item.deps[i] || [],
                         url  : url
-                    }
+                    };
                 });
             }
         });
@@ -87,7 +89,7 @@ module.exports = {
     writeMapToJSON : function(file, callback) {
         callback = callback || function() {};
         
-        var map = this.resMap();
+        var map  = this.resMap();
 
         fs.writeFile(file, JSON.stringify(map), 'utf8', function (err) {
             if (err) {
@@ -101,7 +103,7 @@ module.exports = {
     replaceMap : function(file, outputFile, replaceTag, callback) {
         callback = callback || function() {};
         
-        var map = this.resMap();
+        var map  = this.resMap();
 
         fs.readFile(file, 'utf8', function (err, data) {
             if (err) {
@@ -120,19 +122,17 @@ module.exports = {
             });
         });
     },
-    rename : rename,
     build  : function (onend) {
         var _this  = this,
-            debug  = _this.debug;
+            debug  = _this.debug,
+            regexs = {
+                name   : /^\/\/\s*@moduleName\s*(.*)\s*$/g,
+                deps   : /^\/\/\s*@moduleDeps\s*(.*)\s*$/g,
+                pkg    : /^\/\/\s*@modulePackage\s*(.*)\s*$/g,
+                define : /\s*define\s*\(([^,]*),?\s*function\(\s*/
+            };
         
         onend = onend || function() {};
-
-        var regexs = {
-            name   : /^\/\/\s*@moduleName\s*(.*)\s*$/g,
-            deps   : /^\/\/\s*@moduleDeps\s*(.*)\s*$/g,
-            pkg    : /^\/\/\s*@modulePackage\s*(.*)\s*$/g,
-            define : /\s*define\s*\(([^,]*),?\s*function\(\s*/
-        };
 
         return through.obj(function (file, encoding, callback) {
             
@@ -146,15 +146,18 @@ module.exports = {
             }
 
             if (file.isBuffer()) {
-                var matches,
-                    contents = file.contents.toString(encoding),
-                    lines    = contents.split(/\n/g);
+                var pkg,
+                    matches,
+                    i          = 0, 
+                    names      = [], 
+                    deps       = [], 
+                    newContent = [],
+                    contents   = file.contents.toString(encoding),
+                    lines      = contents.split(/\n/g);
 
                 if (debug) {
                     console.log(PLUGIN_NAME + ": target =>", file.path);
                 }
-                
-                var names = [], deps = [], pkg;
 
                 lines.forEach(function(line, index) {
                     var ms, name;
@@ -163,7 +166,6 @@ module.exports = {
 
                     if (ms) {
                         pkg = ms[1].trim();
-                        //console.log(pkg);
                     }
                 });
 
@@ -175,7 +177,6 @@ module.exports = {
                     if (ms) {
                         name = ms[1].trim();
                         names.push(name);
-                        //console.log(name);
                     }
                 });
 
@@ -188,8 +189,6 @@ module.exports = {
                         deps.push(dep || []);
                     }
                 });
-
-                var i = 0, newContent = [];
 
                 lines.forEach(function(line, index) {
                     
@@ -208,10 +207,10 @@ module.exports = {
                     newContent.push(line);
                 });
                 
-                var newContent     = newContent.join("\n");
-                var suffix         = '_' + md5(contents).substr(0, _this.suffixLenght);
-                var fileName       = file.path.replace(file.base, '');
-                var outputFileName = fileName.replace(/\.js$/, '') + suffix + ".js";
+                var newContent     = newContent.join("\n"),
+                    suffix         = '_' + md5(contents).substr(0, _this.suffixLenght),
+                    fileName       = file.path.replace(file.base, ''),
+                    outputFileName = fileName.replace(/\.js$/, '') + suffix + ".js";
 
                 var m = {
                     pkg    : pkg || '',
