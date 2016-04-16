@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gulp-moder Test</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h1>gulp-moder</h1>
+    <p>Gulp plugin for moder.js</p>
+    <pre id="code" style="width:100%;"></pre>
+    <script src="./bower_components/moder.js/dist/moder.min.js"></script>
+    <script id="script">
+        var resMap = {"pkg":{"pkgA":{"deps":["pkg1","pkg2","pkg3","a","view/info"],"url":"./output/pkg/all_3aa20277.js"},"pkgB":{"deps":["a","b","c","c/main"],"url":"./output/pkg/pkg2_d3903ca2.js"}},"res":{"a":{"deps":["b","c"],"pkg":"pkgB"},"b":{"deps":["c/main"],"pkg":"pkgB"},"c":{"deps":[],"pkg":"pkgB"},"c/main":{"deps":[],"url":"./output/c/main_2f3dd68c.js"},"component/cart.list":{"deps":[],"url":"./output/component/cart.list_707594a1.js"},"pkg1":{"deps":[],"pkg":"pkgA"},"pkg2":{"deps":["pkg1","pkg3","a","view/info"],"pkg":"pkgA"},"pkg3":{"deps":[],"pkg":"pkgA"},"view/info":{"deps":["component/cart.list"],"url":"./output/view/info_fd175e15.js"}}};
+
+        require.map(resMap);
+        
+        require.async(["a"], function(a) {
+            console.log("load a =>", a);
+        });  
+        
+        require.async(["c"], function(c) {
+            console.log("load c =>", c);
+        });
+
+        require.load(["pkg1", "pkg2"], function(pkg1, pkg2) {
+            console.log("load pkgA =>", pkg1, pkg2);
+        });
+    </script>
+</body>
+</html>

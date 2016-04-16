@@ -1,0 +1,23 @@
+{
+  "name": "gulp-moder",
+  "version": "0.1.0",
+  "description": "Gulp plugin for Moder.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Gulp",
+    "Moder.js",
+    "Module"
+  ],
+  "author": "Pandao",
+  "license": "MIT",
+  "dependencies": {
+    "deep-assign": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "md5": "^2.1.0",
+    "stream": "0.0.2",
+    "through2": "^2.0.1"
+  }
+}

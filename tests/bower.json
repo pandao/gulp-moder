@@ -1,0 +1,24 @@
+{
+  "name": "gulp-moder.tests",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Pandao"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "tests"
+  ],
+  "homepage": "https://github.com/pandao/gulp-moder",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "moder.js": "^0.1.0"
+  }
+}

@@ -1,14 +1,3 @@
-# gulp-moder
-
-Gulp plugin for [Moder.js](https://githun.com/pandao/moder.js)
-
-[Moder.js](https://githun.com/pandao/moder.js) 构建工具，辅助自动生成模块 Map。
-
-### 使用方法
-
-`Gulpfile.js`：
-
-```javascript
 /**
  * Gulp.js 构建文件
  * 
@@ -73,7 +62,7 @@ gulp.task("map", ["clean"], function() {
             };*/
 
             // 替换模板页中的 Map 标签，并输出最终页面文件
-            moder.replaceMap('./index.tpl.html', './index.html', /({{\$map}})/g, function(map) {
+            moder.replaceMap('./test.tpl.html', './test.html', /({{\$map}})/g, function(map) {
                 //console.log('moder.replaceMap =>', JSON.stringify(map));
             });
 
@@ -91,80 +80,7 @@ gulp.task("map", ["clean"], function() {
 
 gulp.task('watch', function() {
     gulp.watch('modules/**/*.js', ['map']);
-    gulp.watch('index.tpl.html', ['map']);
+    gulp.watch('test.tpl.html', ['map']);
 });
 
 gulp.task("default", ["pkg", "map"]);
-```
-
-模块文件自动生成标签：
-
-1、单文件单个模块
-
-```javascript
-//@moduleName xxxx        // 模块名
-//@moduleDeps xxx,xxx,... // 模块依赖
-
-define(function(require, exports, module){
-    // 禁止在 define 里 define
-    module.exports = {
-        foo : 'bar'
-    };
-});
-```
-
-2、包模块文件，即一个文件内有多个模块 define
-
-```javascript
-//@modulePackage xxxx     // 包名
-//@moduleName xxxx        // 模块名
-//@moduleDeps xxx,xxx,... // 模块依赖
-
-define(function(require, exports, module){
-    module.exports = {
-        foo : 'bar'
-    };
-});
-
-//@moduleName xxxx        // 模块名
-//@moduleDeps xxx,xxx,... // 模块依赖
-
-define(function(require, exports, module){
-    module.exports = {
-        foo : 'bar'
-    };
-});
-
-//@moduleName xxxx        // 模块名
-//@moduleDeps xxx,xxx,... // 模块依赖
-
-define(function(require, exports, module){
-    module.exports = {
-        foo : 'bar'
-    };
-});
-```
-
-生成结果：
-
-```
-./output
-    /pkg
-        all_3aa20277.js
-        pkg2_d3903ca2.js
-    /c
-        main_2f3dd68c.js
-    /view
-        info_fd175e15.js
-        ...
-    /component
-        cart.list_707594a1.js
-        ...
-    ...
-```
-
-### License
-
-The [MIT](https://github.com/pandao/gulp-moder/blob/master/LICENSE) license.
-
-Copyright (c) 2016 Pandao

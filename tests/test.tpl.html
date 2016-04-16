@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gulp-moder Test</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h1>gulp-moder</h1>
+    <p>Gulp plugin for moder.js</p>
+    <pre id="code" style="width:100%;"></pre>
+    <script src="./bower_components/moder.js/dist/moder.min.js"></script>
+    <script id="script">
+        var resMap = {{$map}};
+
+        require.map(resMap);
+        
+        require.async(["a"], function(a) {
+            console.log("load a =>", a);
+        });  
+        
+        require.async(["c"], function(c) {
+            console.log("load c =>", c);
+        });
+
+        require.load(["pkg1", "pkg2"], function(pkg1, pkg2) {
+            console.log("load pkgA =>", pkg1, pkg2);
+        });
+    </script>
+</body>
+</html>
