@@ -163,6 +163,14 @@ define(function(require, exports, module){
     ...
 ```
 
+调用模块：
+
+```javascript
+require(['模块1', '模块2'], function(m1, m2) {
+    console.log(m1, m2);
+});
+```
+
 ### License
 
 The [MIT](https://github.com/pandao/gulp-moder/blob/master/LICENSE) license.
