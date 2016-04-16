@@ -14,6 +14,7 @@ var md5         = require('md5');
 var path        = require("path");
 var gutil       = require('gulp-util');
 var through     = require("through2");
+var rename      = require('./lib/rename.js');
 var deepAssign  = require('deep-assign');
 var _map        = [];
 var PLUGIN_NAME = "[gulp-moder]";
@@ -119,7 +120,7 @@ module.exports = {
             });
         });
     },
-    rename : require('./lib/rename.js'),
+    rename : rename,
     build  : function (onend) {
         var _this  = this,
             debug  = _this.debug;

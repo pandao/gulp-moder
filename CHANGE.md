@@ -8,3 +8,8 @@
 - 支持替换文件内 Map 标签内容；
 - 支持生成模块 Map 文件；
 - 支持追加 Map 到主 Map；
+
+### v0.1.1
+
+- 更新 `index.js` `rename()` 方法；
+- 更新 README.md，`moder.js` 链接地址错误的问题；

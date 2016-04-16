@@ -1,8 +1,8 @@
 # gulp-moder
 
-Gulp plugin for [Moder.js](https://githun.com/pandao/moder.js)
+Gulp plugin for [Moder.js](https://github.com/pandao/moder.js)
 
-[Moder.js](https://githun.com/pandao/moder.js) 构建工具，辅助自动生成模块 Map。
+[Moder.js](https://github.com/pandao/moder.js) 构建工具，辅助自动生成模块 Map。
 
 ### 使用方法
 
