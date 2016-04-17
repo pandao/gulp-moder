@@ -3,7 +3,7 @@
 define(function(require, exports, module){
     
     require.loadCSS({
-        content : 'body {background: green;}'
+        content : 'body {background: red;}'
     });
     
     require.loadCSS({

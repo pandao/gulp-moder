@@ -2,7 +2,7 @@
  * Gulp.js 构建文件
  * 
  * @author Pandao
- * @updateTime 2016-04-16
+ * @updateTime 2016-04-17
  */
 
 var fs      = require("fs");

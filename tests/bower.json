@@ -19,6 +19,6 @@
     "tests"
   ],
   "devDependencies": {
-    "moder.js": "^0.1.0"
+    "moder.js": "^0.2.0"
   }
 }

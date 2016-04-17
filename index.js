@@ -30,6 +30,7 @@ function pathFillEnd(_path) {
 module.exports = {
     debug         : false,
     suffixLenght  : 8,
+    suffixPrefix  : '_',
     srcPath       : '.',
     destPath      : '.', 
     appendMap     : {},
@@ -86,38 +87,38 @@ module.exports = {
         
         return deepAssign(resMap, this.appendMap);
     },
-    writeMapToJSON : function(file, callback) {
+    writeMapToJSON : function(file, callback, remap) {
         callback = callback || function() {};
         
-        var map  = this.resMap();
+        var map = (isUndefined(remap)) ? this.resMap() : remap;
 
-        fs.writeFile(file, JSON.stringify(map), 'utf8', function (err) {
+        fs.writeFile(file, JSON.stringify(map || {}), 'utf8', function (err) {
             if (err) {
                 return console.log(PLUGIN_NAME + ' write json module map file failed =>', err);
             } else {
                 console.log(PLUGIN_NAME + ' write json module map file success =>', file);
-                callback(map);
+                callback(map || {});
             }
         });
     },
-    replaceMap : function(file, outputFile, replaceTag, callback) {
+    replaceMap : function(file, outputFile, replaceTag, callback, remap) {
         callback = callback || function() {};
         
-        var map  = this.resMap();
+        var map = (isUndefined(remap)) ? this.resMap() : remap;
 
         fs.readFile(file, 'utf8', function (err, data) {
             if (err) {
                 return console.log(PLUGIN_NAME + ' read file failed =>', err);
             }
 
-            var replace = data.replace(replaceTag, JSON.stringify(map));
+            var replace = data.replace(replaceTag, JSON.stringify(map || {}));
 
             fs.writeFile(outputFile, replace, 'utf8', function (err) {
                 if (err) {
                     return console.log(PLUGIN_NAME + ' replace module map failed =>', err);
                 } else {
                     console.log(PLUGIN_NAME + ' replace module map success =>', outputFile);
-                    callback(map);
+                    callback(map || {});
                 }
             });
         });
@@ -129,7 +130,7 @@ module.exports = {
                 name   : /^\/\/\s*@moduleName\s*(.*)\s*$/g,
                 deps   : /^\/\/\s*@moduleDeps\s*(.*)\s*$/g,
                 pkg    : /^\/\/\s*@modulePackage\s*(.*)\s*$/g,
-                define : /\s*define\s*\(([^,]*),?\s*function\(\s*/
+                define : /\s*define\s*\(([^,]*),?\s*(function)?\(?\s*/
             };
         
         onend = onend || function() {};
@@ -196,9 +197,11 @@ module.exports = {
                     
                     if (defineMatches) {
                         var defineName = defineMatches[1];
-                        
-                        if (defineName === "") {
-                            line = line.replace(/^\s*define\s*\(\s*/g, '\ndefine("' + names[i] + '", ');
+
+                        if (names[i] || defineName === "") {
+                            if (!/\s*define\s*\(\s*(['"](.*)['"]),\s*/g.test(line)) {
+                                line = line.replace(/\s*define\s*\(\s*/g, '\ndefine("' + names[i] + '", ');
+                            }
                         }
                         
                         i++;
@@ -208,7 +211,7 @@ module.exports = {
                 });
                 
                 var newContent     = newContent.join("\n"),
-                    suffix         = '_' + md5(contents).substr(0, _this.suffixLenght),
+                    suffix         = _this.suffixPrefix + md5(contents).substr(0, _this.suffixLenght),
                     fileName       = file.path.replace(file.base, ''),
                     outputFileName = fileName.replace(/\.js$/, '') + suffix + ".js";
 
@@ -232,7 +235,7 @@ module.exports = {
                 }
             }
 
-            callback(null, file);
+            return callback(null, file);
         });
     }
 };

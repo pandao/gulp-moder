@@ -2,7 +2,7 @@
 
 Gulp plugin for [Moder.js](https://github.com/pandao/moder.js)
 
-[Moder.js](https://github.com/pandao/moder.js) 构建工具，辅助自动生成模块 Map。
+前端模块加载器 [Moder.js](https://github.com/pandao/moder.js) 构建工具，辅助自动生成模块 Map。
 
 ### 使用方法
 
@@ -19,7 +19,7 @@ Gulp 任务配置 `Gulpfile.js`：
  * Gulp.js 构建文件
  * 
  * @author Pandao
- * @updateTime 2016-04-16
+ * @updateTime 2016-04-17
  */
 
 var fs      = require("fs");
@@ -79,7 +79,7 @@ gulp.task("map", ["clean"], function() {
             };*/
 
             // 替换模板页中的 Map 标签，并输出最终页面文件
-            moder.replaceMap('./index.tpl.html', './index.html', /({{\$map}})/g, function(map) {
+            moder.replaceMap('./test.tpl.html', './test.html', /({{\$map}})/g, function(map) {
                 //console.log('moder.replaceMap =>', JSON.stringify(map));
             });
 
@@ -97,7 +97,7 @@ gulp.task("map", ["clean"], function() {
 
 gulp.task('watch', function() {
     gulp.watch('modules/**/*.js', ['map']);
-    gulp.watch('index.tpl.html', ['map']);
+    gulp.watch('test.tpl.html', ['map']);
 });
 
 gulp.task("default", ["pkg", "map"]);

@@ -4,7 +4,7 @@
 //@fdfd
 
 ///fadsfasdasf
-define(function(require, exports, module){
+define("a", function(require, exports, module){
     var b = require("b");
     var c = require("c");
     
