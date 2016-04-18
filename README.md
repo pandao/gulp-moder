@@ -119,7 +119,7 @@ define(function(require, exports, module){
 });
 ```
 
-> `require.async('xxx', function(){})` 方式调用的模块不需要定义在 `//@moduleDeps` 中。
+> 在 `define` 内通过 `require.async('xxx', function(){//...});` 方式调用的模块不需要定义在 `//@moduleDeps` 模块依赖中。
 
 2、包模块文件，即一个文件内有多个模块 define
 
