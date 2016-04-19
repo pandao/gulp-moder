@@ -103,7 +103,9 @@ gulp.task('watch', function() {
 gulp.task("default", ["pkg", "map"]);
 ```
 
-模块文件自动生成标签：
+标签语法：
+
+> 用于自动生成模块 Map，注意标签必须靠左边顶格写（左边无空格）。
 
 1、单文件单个模块
 
