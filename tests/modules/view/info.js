@@ -5,5 +5,6 @@ define(function(require, exports, module){
     exports.abc      = "ABC";
     exports.listView = cartList;
     exports.content  = 'view/info content';
+    exports.version  = '0.3.4';
 });
 //2323fdfsfsdsdsdsdsdsds

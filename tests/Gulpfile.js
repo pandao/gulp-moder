@@ -73,7 +73,7 @@ gulp.task("map", ["clean"], function() {
         })
         .pipe(moder.build())
         .pipe(uglify())
-        .pipe(moder.rename())
+        //.pipe(moder.rename()) // 如果要使用 cart.list_707594a1.js 这种方式重命名文件才调用这个方法
         .pipe(gulp.dest(moder.destPath))
         .pipe(notify({ message: "Map task completed!" }));
 });

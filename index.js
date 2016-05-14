@@ -1,10 +1,10 @@
 /**
  * Gulp plugin for Moder.js
  * 
- * @version    v0.1.2
+ * @version    v0.1.4
  * @author     Pandao <pandao@vip.qq.com>
  * @homePage   https://github.com/pandao/gulp-moder
- * @updateTime 2016-04-16
+ * @updateTime 2016-05-14
  * @license    MIT license (MIT)
  * @copyright  2016 Pandao
  */ 
@@ -28,14 +28,15 @@ function pathFillEnd(_path) {
 }
 
 module.exports = {
-    debug         : false,
-    suffixLenght  : 8,
-    suffixPrefix  : '_',
-    srcPath       : '.',
-    destPath      : '.', 
-    appendMap     : {},
-    rename        : rename,
-    resMap        : function() {
+    debug        : false,
+    suffixLenght : 8,
+    suffixPrefix : '_',
+    srcPath      : '.',
+    destPath     : '.', 
+    appendMap    : {},
+    versionQuery : true,
+    rename       : rename,
+    resMap       : function() {
         var _this  = this,
             remap  = false,
             resMap = {
@@ -45,6 +46,10 @@ module.exports = {
 
         _map.forEach(function(item, index){
             var url = pathFillEnd(_this.destPath) + item.file;
+            
+            if (_this.versionQuery) {
+                url += '?v=' + item.suffix;
+            }
 
             if (item.pkg !== '') {
                 var deps    = {}, 
@@ -214,6 +219,11 @@ module.exports = {
                     suffix         = _this.suffixPrefix + md5(contents).substr(0, _this.suffixLenght),
                     fileName       = file.path.replace(file.base, ''),
                     outputFileName = fileName.replace(/\.js$/, '') + suffix + ".js";
+                
+                if (_this.versionQuery) {
+                    suffix         = md5(contents).substr(0, _this.suffixLenght);
+                    outputFileName = fileName.replace(/\.js$/, '') + ".js";
+                }
 
                 var m = {
                     pkg    : pkg || '',

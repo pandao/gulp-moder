@@ -90,7 +90,7 @@ gulp.task("map", ["clean"], function() {
         })
         .pipe(moder.build())
         .pipe(uglify())
-        .pipe(moder.rename())
+        //.pipe(moder.rename()) // 如果要使用 cart.list_707594a1.js 这种方式重命名文件才调用这个方法
         .pipe(gulp.dest(moder.destPath))
         .pipe(notify({ message: "Map task completed!" }));
 });
@@ -173,6 +173,8 @@ define(function(require, exports, module){
         ...
     ...
 ```
+
+> 当配置项 `versionQuery = true`（v0.1.4 起新增，默认为 `true`） 且不调用 `moder.rename()` 方法时，模块文件的 URL 形式为 `/component/cart.list.js?v=707594a1`，用于保证文件始终存在，避免无法请求到文件。
 
 调用模块：
 

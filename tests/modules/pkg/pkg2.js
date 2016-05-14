@@ -11,7 +11,7 @@ define("a", function(require, exports, module){
     // 禁止在 define 内 define
     
     module.exports = {
-        a : 1,
+        a : 2016,
         b : b.name,
         c : c
     }
